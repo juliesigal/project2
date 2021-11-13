@@ -9,21 +9,17 @@ for i in board:
 def present_board(b):
     return f'{b[0:3]}  \n{b[3:6]}  \n{b[6:9]}'
 
-def convert_xo(b,b2,spot,sign):
-    x = b.split()
-    y = b2.split()
+def convert_xo(b,spot,sign):
+    y = []
     for i in range(len(b)):
-        print(i)
-        if i != spot:
-            continue
+        if i == spot:
+            y.append(sign)
         else:
-            if b[i] == '_':
-                b2[i] == sign
-
-    return b2
-b = '_________'
+            y.append(b[i])
+    return ''.join(y)
+b = '_o______o'
 b2 = '_________'
 spot = 3
 sign = 'x'
-#print(convert_xo(b,b2,spot,sign))
-print(present_board(board))
+current_b= convert_xo(b,spot,sign)
+print(present_board(current_b))
