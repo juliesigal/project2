@@ -1,9 +1,23 @@
-import random
-
-def present_board(b):
+def present_board(b):      #present the board in 3 different lines to the user
     return f'{b[0:3]}  \n{b[3:6]}  \n{b[6:9]}'
 
-def convert_xo(b,spot,sign):
+def get_user_sign(b):    #get user's choice, check if it's an integer, if it's legal and free
+    while True:
+        s = input('please pick a spot in a field')
+        if s.isdigit():    #check if it's an integer
+            s = int(s)
+            if s < 0 or s > 9:      #if it's legal
+                print('this spot is not exist')
+                continue
+            else:
+                for i in list(b):    # if it's free
+                    if b[s] == '_':
+                        return s
+                    else:
+                        print("it's occuped,try again")
+                        break
+
+def convert_xo(b,spot,s):    #replace user's choice in the string
     y = []
     for i in range(len(b)):
         if i == spot:
@@ -12,20 +26,7 @@ def convert_xo(b,spot,sign):
             y.append(b[i])
     return ''.join(y)
 
-def get_user_sign(b):
-    for i in range(len(b)):
-        s = int(input('please pick a spot in a field'))
-        y = len(b)
-        if s < 0 or s >= y:
-            print('this spot is not exist')
-            continue
-        elif s == i:
-            if b[i] != '_':
-                print('occuped')
-                continue
-    return s
-
-def check_win(b,sign):
+def check_win(b,s):    #check all the 8 ways to win
     for i in list(b):
         if b[0] == sign and b[1] == sign and b[2] == sign\
             or b[3] == sign and b[4] == sign and b[5] == sign\
@@ -41,14 +42,17 @@ def check_win(b,sign):
 
 board = '_________'
 
-for i in range(len(board)):
-    x = get_user_sign(board)
-    current_b = convert_xo(board, x, 'x')
+for i in range(len(board)):    #run on all string fields
+    player_choice = get_user_sign(board)     #check if player 1(x) or 2(o)
+    if i % 2 == 0:
+        sign = 'x'
+    else:
+        sign = 'o'
+    current_b = convert_xo(board, player_choice, sign)
     board = current_b
     print(present_board(board))
-    y = get_user_sign(board)
-    current_b = convert_xo(board, y, 'o')
-    board = current_b
-    #print(check_win(board, 'y'))
-    print(present_board(board))
-
+    if check_win(board,sign):                 #check if it's win before the end of the game
+        print(check_win(board,sign))
+        break
+        if i == 8:
+            print("it's a draw")         
