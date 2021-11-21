@@ -3,7 +3,7 @@ def present_board(b):      #present the board in 3 different lines to the user
 
 def get_user_sign(b):    #get user's choice, check if it's an integer, if it's legal and free
     while True:
-        s = input('please pick a spot in a field')
+        s = input('please enter number of field')
         if s.isdigit():    #check if it's an integer
             s = int(s)
             if s < 0 or s > 9:      #if it's legal
@@ -14,7 +14,7 @@ def get_user_sign(b):    #get user's choice, check if it's an integer, if it's l
                     if b[s] == '_':
                         return s
                     else:
-                        print("it's occuped,try again")
+                        print("it's occupied, try again")
                         break
 
 def convert_xo(b,spot,s):    #replace user's choice in the string
@@ -41,6 +41,8 @@ def check_win(b,s):    #check all the 8 ways to win
 
 
 board = '_________'
+print('welcome to the tic-tac-toe game. first player get plays with x and second plays with o. good luck.')
+print(present_board(board))
 
 for i in range(len(board)):    #run on all string fields
     player_choice = get_user_sign(board)     #check if player 1(x) or 2(o)
